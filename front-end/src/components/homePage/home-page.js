@@ -93,7 +93,7 @@ const HomePage = () => {
                                 <div className="tab-content">
                                     <About/>
                                     <Gallery/>
-                                    <Settings/>
+                                    <Settings user={user}/>
                                 </div>
                             </div>
                         </div>

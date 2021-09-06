@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {setToken, setUser} from "../../reducers/reposReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import Context from "../../store/context";
 import UserService from "../../services/UserService";
@@ -20,13 +20,16 @@ const Navbar = () => {
             history.push('/')
         }
     }
-
+    const currentUser = useSelector(state => state.repos.user)
 
     const [users, setUsers] = useState([{}])
 
     useEffect(async () => {
-        let usersData = await UserService.getAllUsers()
-        setUsers(usersData.data)
+        let usersDataResponse = await UserService.getAllUsers()
+        let usersData = usersDataResponse.data.filter(user=>{
+            return user.id !== currentUser.id
+        })
+        setUsers(usersData)
     }, [])
 
 
@@ -50,7 +53,7 @@ const Navbar = () => {
                     onChange={e => getID(e, users)}
                     options={users.map((option) => option.username)}
                     renderInput={(params) => (
-                        <TextField {...params} label="freeSolo1" margin="normal" variant="outlined"/>
+                        <TextField {...params} label="Users" margin="normal" variant="outlined"/>
                     )}
                 />
                 <button className="btn btn-outline-success my-2 my-sm-0" onClick={logout} type="submit">Logout</button>

@@ -4,24 +4,12 @@ import {useForm} from "react-hook-form";
 import {NavLink, useHistory} from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import formOptions from '../validation/userRegistration'
 
 
 const RegistrationForm = () => {
     let history = useHistory()
-    const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required('User Name is required'),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Confirm Password is required')
-    });
-    const formOptions = { resolver: yupResolver(validationSchema) };
+
 
     // get functions to build form with useForm() hook
     const { register, handleSubmit, reset, formState } = useForm(formOptions);
