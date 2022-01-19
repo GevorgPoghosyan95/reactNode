@@ -19,10 +19,10 @@ const RegistrationForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const {helper} = useContext(Context)
+    const {context} = useContext(Context)
 
     const onSubmit = async (data) => {
-        let result = await helper.registration(username,email, password)
+        let result = await context.registration(username,email, password)
         if(result.status !== "ok"){
             alert(JSON.stringify(result.messages))
         }else{

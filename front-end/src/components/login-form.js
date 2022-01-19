@@ -3,7 +3,7 @@ import React, {Component, useState, useContext} from "react";
 import Context from '../store/context'
 import {useForm} from "react-hook-form";
 import {NavLink, Redirect, useHistory} from 'react-router-dom'
-import { yupResolver } from '@hookform/resolvers/yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from "react-redux";
 import {setToken, setUser} from "../reducers/reposReducer"
@@ -21,18 +21,18 @@ const LoginForm = () => {
             .min(6, 'Password must be at least 6 characters')
             .required('Password is required')
     });
-    const formOptions = { resolver: yupResolver(validationSchema) };
+    const formOptions = {resolver: yupResolver(validationSchema)};
 
-    const { register, handleSubmit, reset, formState } = useForm(formOptions);
-    const { errors } = formState;
+    const {register, handleSubmit, reset, formState} = useForm(formOptions);
+    const {errors} = formState;
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const onSubmit = async (data) => {
+    const onSubmit = async () => {
         let result = await context.login(email, password)
-        if(result.status !== "ok"){
+        if (result.status !== "ok") {
             alert(result.messages)
-        }else{
+        } else {
             dispatch(setToken(result.data.accessToken))
             dispatch(setUser(result.data.user))
             history.push('/home')

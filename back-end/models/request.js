@@ -1,15 +1,17 @@
 const {DataTypes} = require("sequelize");
-const PostSchema = (sequelize, DataTypes) => {
-    const Post = sequelize.define('Post', {
-        title: {
+
+
+const RequestSchema = (sequelize, DataTypes) => {
+    const Request = sequelize.define('Request', {
+        status: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        content: {
+        senderId: {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        userId: {
+        receiverId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -18,11 +20,10 @@ const PostSchema = (sequelize, DataTypes) => {
             }
         }
     }, {
-        modelName: 'Post',
+        modelName: 'Request',
     });
 
-
-    return Post;
+    return Request;
 };
-module.exports.Post = PostSchema(sequelize, DataTypes)
+module.exports.Request = RequestSchema(sequelize, DataTypes)
 

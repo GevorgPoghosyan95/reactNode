@@ -3,14 +3,15 @@ import './App.css';
 import './public/css/style.css'
 import React, {useEffect, useContext} from 'react'
 import Routes from './routes/index'
-import Context from "./store/context";
-import {AxiosResponse} from "axios";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
 
     return (
         <div className="App">
-            <Routes/>
+           <BrowserRouter>
+               <Routes/>
+           </BrowserRouter>,
         </div>
     );
 }

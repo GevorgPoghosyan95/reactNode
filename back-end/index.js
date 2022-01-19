@@ -18,6 +18,8 @@ app.use('/api',router,authRouter)
 
 const start = async ()=>{
     try{
+        await sequelize.authenticate()
+        await sequelize.sync()
         app.listen(process.env.PORT,()=>{
             console.log(`SERVER RUN ${process.env.PORT}`)
         })

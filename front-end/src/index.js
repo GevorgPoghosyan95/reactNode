@@ -5,21 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Helper from "./store/helper";
 import {Provider} from "react-redux";
-import {store,persistor} from './reducers/index'
+import {store, persistor} from './reducers/index'
 import {PersistGate} from 'redux-persist/integration/react'
+
 
 require('dotenv').config()
 
-//
-// const helper = new Helper();
-// export const Context = createContext({helper})
 
 ReactDOM.render(
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <App/>
-            </PersistGate>
-        </Provider>,
+    <Provider store={store}>
+        <PersistGate persistor={persistor}>
+            <App/>
+        </PersistGate>
+    </Provider>,
     document.getElementById('root')
 )
 ;

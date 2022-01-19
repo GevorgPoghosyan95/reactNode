@@ -2,8 +2,26 @@ import AuthService from "../services/AuthService";
 import axios from 'axios'
 import {AuthResponse} from "../models/response/AuthResponse";
 import UserService from "../services/UserService";
+import {makeAutoObservable} from "mobx";
+import { toJS } from 'mobx'
 
 export default class Helper {
+
+    private currentUser = {};
+
+    constructor() {
+        makeAutoObservable(this)
+    }
+
+    getCurrentUser (): Object {
+        return toJS(this.currentUser)
+    }
+
+    setCurrentUser (user: {}) {
+        this.currentUser = user
+    }
+
+
     async login(email: string, password: string) {
         try {
             const response = await AuthService.login(email, password);
@@ -51,16 +69,23 @@ export default class Helper {
     }
 
 
-
-    async checkAuth(){
-        try{
-            const response = await axios.get<AuthResponse>(`${process.env.REACT_APP_URL}/refresh`,{withCredentials:true})
-            localStorage.setItem('token',response.data.accessToken);
+    async checkAuth() {
+        try {
+            const response = await axios.get<AuthResponse>(`${process.env.REACT_APP_URL}/refresh`, {withCredentials: true})
+            localStorage.setItem('token', response.data.accessToken);
             return response.data;
-        }catch (e) {
+        } catch (e) {
             return e.response?.data?.status
         }
     }
 
 
+    async getRequests(id:number, senderId:number) {
+        try {
+            let result = await UserService.getRequests(id,senderId);
+            return result.data ? result.data : []
+        } catch (e) {
+            return {data:[e],status:500}
+        }
+    }
 }

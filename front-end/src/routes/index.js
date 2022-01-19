@@ -1,20 +1,20 @@
-import React from 'react'
-import {BrowserRouter, Route} from "react-router-dom";
-import LoginForm from "../components/login-form";
-import RegistrationForm from "../components/registration-form";
-import HomePage from "../components/homePage/home-page";
-import UserHomePage from "../components/userPage/home-page";
-import ProtectedRoute from "./protectedRoute";
-
+import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom'
+const {publicRoutes,authRoutes} = require("./AppRouter");
 
 const Routes = () => {
+    const isAuth = localStorage.getItem('token')
     return (
-        <BrowserRouter>
-            <Route exact path="/" component={LoginForm}/>
-            <Route exact path="/create_account" component={RegistrationForm}/>
-            <ProtectedRoute exact path="/home" component={() => <HomePage/>}/>
-            <ProtectedRoute exact path="/user/:id" component={() => <UserHomePage/>}/>
-        </BrowserRouter>
-    )
+        <Switch>
+            {isAuth && authRoutes.map(({path,Component})=>
+                <Route key={path}  path={path} component={Component} exact/>
+            )}
+            {publicRoutes.map(({path,Component})=>
+                <Route key={path}  path={path} component={Component} exact/>
+            )}
+            <Redirect to={'/'} />
+        </Switch>
+    );
+
 }
-export default Routes;
+
+export default Routes

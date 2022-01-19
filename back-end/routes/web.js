@@ -24,6 +24,8 @@ authRouter.post('/getPostsById',AdminController.getPostsById)
 authRouter.post('/post/create',PostController.create)
 authRouter.post('/post/delete',PostController.delete)
 authRouter.post('/getUsers',AdminController.get_users)
-
+authRouter.post('/editUserById',AdminController.editUserById)
+authRouter.post('/sendRequest',AdminController.sendRequest)
+authRouter.post('/getRequests',AdminController.getRequests)
 
 module.exports = {router,authRouter};
